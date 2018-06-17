@@ -1,6 +1,6 @@
 {
-  "name": "myIonicApp",
-  "app_id": "67dccb74",
+  "name": "NeoPixel",
+  "app_id": "com.megster.ionic3.neopixel",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
