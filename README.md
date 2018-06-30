@@ -14,26 +14,26 @@ Inspired by :
 ## Ionic 3
 
 This project requires Ionic3
-    npm install -g ionic@latest
+    `npm install -g ionic@latest`
 
 Install Cordova just to be safe
-    npm install -g cordova@latest
+    `npm install -g cordova@latest`
 
 
 ## iOS
 
 Assuming you have Xcode installed
-    ionic cordova run ios --device
+    `ionic cordova run ios --device`
 
 
 ## Android
 
 Assuming you have the Android SDK installed
-    ionic cordova run android --device
+    `ionic cordova run android --device`
 
 ## Raspberry Pi Zero W setup:
-    npm install bleno
-    npm install node-gyp
-    npm install rpi-ws281x-native
+    `npm install bleno`
+    `npm install node-gyp`
+    `npm install rpi-ws281x-native`
 
 
