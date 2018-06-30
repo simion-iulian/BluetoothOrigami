@@ -1,0 +1,17 @@
+{
+  "name": "btlight",
+  "version": "1.0.0",
+  "description": "A simple app to enable bluetooth control of Neopixel LEDs with a Raspberry Pi",
+  "main": "light.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bleno": "^0.5.0",
+    "node-gyp": "^3.7.0",
+    "rpi-ws281x-native": "^0.8.2",
+    "shortid": "^2.2.8"
+  }
+}

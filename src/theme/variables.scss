@@ -38,8 +38,21 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+
+  sun-yellow: rgb(250,219,10),
+  
+  red-slider-color: rgb(200, 3, 3),
+  green-slider-color: rgb(3,200,3),
+  blue-slider-color: rgb(0, 0, 255),
+  
+  red-slider-bg: rgb(80, 3, 3),
+  green-slider-bg: rgb(3,50,3),
+  blue-slider-bg: rgb(3,3,58),
+  brightness-slider-bg: rgb(32,32,32)
 );
+
+
 
 
 // App iOS Variables

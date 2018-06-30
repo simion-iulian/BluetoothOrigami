@@ -20,6 +20,7 @@ export class DetailPage {
   green: number;
   blue: number;
   brightness: number;
+  pattern: string;
   power: boolean;
 
   constructor(public navCtrl: NavController, 
@@ -133,6 +134,9 @@ export class DetailPage {
 
   }
 
+  setPattern(event){
+    console.log("Selecting pattern" + this.pattern)
+  }
   setBrightness(event){
 
     console.log('setBrightness');
