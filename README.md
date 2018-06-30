@@ -3,8 +3,11 @@
 Credit due to these repos:
 
 [Ionic Framework Neopixel example](https://github.com/don/ionic-ble-examples/tree/master/neopixel)
+
 [Ionic LED example](https://github.com/don/ionic-ble-examples/blob/master/arduino/LED/LED.ino)
+
 [Needed Bluetooth Characteristics for NeoPixels(Arduino port to Bleno)](https://github.com/MakeBluetooth/ble-neopixel/blob/master/arduino/BLE_NeoPixel/BLE_NeoPixel.ino)
+
 [And inspired by this setup too](https://github.com/jdj333/node-ionic-bluetooth)
 
 ## Ionic 3

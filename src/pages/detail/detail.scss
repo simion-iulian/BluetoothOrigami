@@ -1,11 +1,13 @@
 page-detail {
   .toolbar-background {
-    background: radial-gradient(circle at bottom, rgb(250,219,10) 0%, rgb(145,31,145) 100%);
+   // background: radial-gradient(circle at bottom, rgb(250,219,10) 0%, rgb(145,31,145) 100%);
+    background: color($colors, header-bg);
+  
   }
 
   .pattern{
-    background: linear-gradient(0.25turn,rgb(145,31,145) 0%, rgb(250,219,10) 50%, rgb(145,31,145) 100%);
-    
+    // background: linear-gradient(0.25turn,rgb(145,31,145) 0%, rgb(250,219,10) 50%, rgb(145,31,145) 100%);
+    background: color($colors, header-bg);
   }
   .red-slider{
     background: color($colors, red-slider-bg);
@@ -20,6 +22,6 @@ page-detail {
     background: color($colors, dark);
   }
   .power{
-    background: color($colors, dark);
+    background: #111111;
   }
 }

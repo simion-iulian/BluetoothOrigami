@@ -41,14 +41,21 @@ $colors: (
   dark:       #222,
 
   sun-yellow: rgb(250,219,10),
+  header-bg: #654321,
+  pattern-text-color: #271401,
+  header-text-color: white,
+  customColor:(
+    base: #664320,
+    contrast: #371401
+  ), 
   
-  red-slider-color: rgb(200, 3, 3),
-  green-slider-color: rgb(3,200,3),
-  blue-slider-color: rgb(0, 0, 255),
+  red-slider-color: rgb(240, 3, 3),
+  green-slider-color: rgb(3,240,3),
+  blue-slider-color: rgb(50, 132, 255),
   
-  red-slider-bg: rgb(80, 3, 3),
+  red-slider-bg: rgb(50, 3, 3),
   green-slider-bg: rgb(3,50,3),
-  blue-slider-bg: rgb(3,3,58),
+  blue-slider-bg: rgb(3,3,50),
   brightness-slider-bg: rgb(32,32,32)
 );
 

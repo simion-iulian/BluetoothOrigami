@@ -4,52 +4,56 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header >
-  <ion-navbar >
-    <ion-title color="dark">{{ peripheral.name || 'Device' }}</ion-title>
+<ion-header>
+  <ion-navbar color="customColor">
+    <ion-title >{{ peripheral.name || 'Device' }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="padding">
   <ion-item class="pattern" no-lines>
-    <ion-label  color="dark">Pattern</ion-label>
+    <ion-label  color="pattern-text-color">Pattern</ion-label>
     <ion-select [(ngModel)]="pattern" (ionChange)="setPattern($event)">
-      <ion-option value="rainbow">Rainbow</ion-option>
-      <ion-option value="waves">Waves</ion-option>
-      <ion-option value="grow">Grow</ion-option>
-      <ion-option value="snake">Snake</ion-option>
-      <ion-option value="surf">Surf</ion-option>
+      <ion-option value="1">Rainbow</ion-option>
+      <ion-option value="2">Waves</ion-option>
+      <ion-option value="3">Grow</ion-option>
+      <ion-option value="4">Snake</ion-option>
+      <ion-option value="5">Surf</ion-option>
     </ion-select>
-  </ion-item >
+  </ion-item>
+  
   <ion-item  class="red-slider" no-lines>
     <ion-label color="red-slider-color">Red</ion-label>
-      <ion-range background="dark" color="red-slider-color" max="255" debounce="30" [(ngModel)]="red"  (ionChange)="setColor($event)">
+      <ion-range background="dark" color="red-slider-color" max="255" debounce="25" [(ngModel)]="red"  (ionChange)="setColor($event)">
     </ion-range>
-  </ion-item >
+  </ion-item>
+
   <ion-item  class="green-slider" no-lines>
     <ion-label color="green-slider-color">Green</ion-label>
-    <ion-range background="dark" color="green-slider-color" max="255" debounce="30" [(ngModel)]="green"  (ionChange)="setColor($event)">
+    <ion-range background="dark" color="green-slider-color" max="255" debounce="25" [(ngModel)]="green"  (ionChange)="setColor($event)">
     </ion-range>
-  </ion-item >
+  </ion-item>
+  
   <ion-item  class="blue-slider" no-lines>
     <ion-label color="blue-slider-color">Blue</ion-label>
-    <ion-range background="dark" color="blue-slider-color" max="255" debounce="30" [(ngModel)]="blue"  (ionChange)="setColor($event)">
+    <ion-range background="dark" color="blue-slider-color" max="255" debounce="25" [(ngModel)]="blue"  (ionChange)="setColor($event)">
     </ion-range>
-  </ion-item >
+  </ion-item>
+
   <ion-item  class="brightness-slider" no-lines>
     <ion-label color="sun-yellow">Brightness</ion-label>
-    <ion-range background="dark" color="sun-yellow" max="255" debounce="30" [(ngModel)]="brightness" (ionChange)="setBrightness($event)">
+    <ion-range background="dark" color="sun-yellow" max="255" debounce="25" [(ngModel)]="brightness" (ionChange)="setBrightness($event)">
       <ion-icon color="sun-yellow" range-left small name="sunny"></ion-icon>
       <ion-icon color="sun-yellow" range-right name="sunny"></ion-icon>
     </ion-range>
-  </ion-item >
+  </ion-item>
 
   <ion-item  class="power" no-lines>
     <ion-label color="light">Power</ion-label>
     <ion-toggle background= "rgb(88,88,88)" [(ngModel)]="power" (ngModelChange)="onPowerSwitchChange($event);"></ion-toggle>  
-  </ion-item >
+  </ion-item>
 
   <ion-item  *ngIf="connected">
     <button ion-button (click)="disconnect();">Disconnect</button>
-  </ion-item >
+  </ion-item>
 </ion-content>

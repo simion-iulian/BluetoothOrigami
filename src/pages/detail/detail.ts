@@ -8,6 +8,7 @@ const NEOPIXEL_SERVICE = 'ccc0';
 const COLOR = 'ccc1';
 const BRIGHTNESS = 'ccc2';
 const POWER_SWITCH = 'ccc3';
+const PATTERN = 'ccc4';
 
 @Component({
   selector: 'page-detail',
@@ -20,7 +21,7 @@ export class DetailPage {
   green: number;
   blue: number;
   brightness: number;
-  pattern: string;
+  pattern: number;
   power: boolean;
 
   constructor(public navCtrl: NavController, 
@@ -73,15 +74,15 @@ export class DetailPage {
     );
 
     // TODO read and notification should use the same handler
-    this.ble.startNotification(peripheral.id, NEOPIXEL_SERVICE, POWER_SWITCH).subscribe(
-      buffer => {
-        var data = new Uint8Array(buffer);
-        console.log('Received Notification: Power Switch = ' + data);
-        this.ngZone.run(() => {
-          this.power = data[0] !== 0;
-        });
-      }
-    );
+    // this.ble.startNotification(peripheral.id, NEOPIXEL_SERVICE, POWER_SWITCH).subscribe(
+    //   buffer => {
+    //     var data = new Uint8Array(buffer);
+    //     console.log('Received Notification: Power Switch = ' + data);
+    //     this.ngZone.run(() => {
+    //       this.power = data[0] !== 0;
+    //     });
+    //   }
+    // );
 
     // this.ble.startNotification(peripheral.id, NEOPIXEL_SERVICE, BRIGHTNESS).subscribe(
     //   buffer => {        
@@ -135,7 +136,12 @@ export class DetailPage {
   }
 
   setPattern(event){
-    console.log("Selecting pattern" + this.pattern)
+    console.log("Selecting pattern: " + this.pattern)
+    let data = new Uint8Array([this.pattern])
+    this.ble.write(this.peripheral.id, NEOPIXEL_SERVICE, PATTERN, data.buffer).then(
+      () => console.log('Updated pattern'),
+      () => console.log('Error updating pattern')
+    );
   }
   setBrightness(event){
 
@@ -145,11 +151,9 @@ export class DetailPage {
       () => console.log('Updated brightness'),
       () => console.log('Error updating brightness')
     );
-
   }
 
   onPowerSwitchChange(event) {
-    
     console.log('onPowerSwitchChange');
     let value = this.power ? 1 : 0;
     let data = new Uint8Array([value]);
