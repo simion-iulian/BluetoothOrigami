@@ -2,7 +2,10 @@ page-detail {
   .toolbar-background {
    // background: radial-gradient(circle at bottom, rgb(250,219,10) 0%, rgb(145,31,145) 100%);
     background: color($colors, header-bg);
-  
+  }
+
+  .item {
+    min-height: 2rem; /* <- this can be whatever you need */
   }
 
   .pattern{

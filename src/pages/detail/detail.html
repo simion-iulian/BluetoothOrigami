@@ -21,7 +21,11 @@
       <ion-option value="5">Surf</ion-option>
     </ion-select>
   </ion-item>
-  
+  <!-- <ion-item   no-lines>
+    <ion-label >Pattern Speed</ion-label>
+      <ion-range  max="255" debounce="25" [(ngModel)]="speed"  (ionChange)="setSpeed($event)">
+    </ion-range>
+  </ion-item> -->
   <ion-item  class="red-slider" no-lines>
     <ion-label color="red-slider-color">Red</ion-label>
       <ion-range background="dark" color="red-slider-color" max="255" debounce="25" [(ngModel)]="red"  (ionChange)="setColor($event)">

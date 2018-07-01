@@ -22,6 +22,7 @@ export class DetailPage {
   blue: number;
   brightness: number;
   pattern: number;
+  speed: number;
   power: boolean;
 
   constructor(public navCtrl: NavController, 
@@ -143,6 +144,16 @@ export class DetailPage {
       () => console.log('Error updating pattern')
     );
   }
+
+  setSpeed(event){
+    console.log("Selecting speed: " + this.speed)
+    // let data = new Uint8Array([this.speed])
+    // this.ble.write(this.peripheral.id, NEOPIXEL_SERVICE, SPEED, data.buffer).then(
+    //   () => console.log('Updated pattern speed'),
+    //   () => console.log('Error updating pattern speed')
+    // );
+  }
+
   setBrightness(event){
 
     console.log('setBrightness');

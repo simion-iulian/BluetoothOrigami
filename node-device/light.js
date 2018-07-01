@@ -1,24 +1,62 @@
 var bleno = require('bleno');
 var ws281x = require('rpi-ws281x-native');
+var fs = require("fs");
 
-var NUM_LEDS = parseInt(process.argv[2], 11) || 11,
-        pixelData = new Uint32Array(NUM_LEDS);
+let r,g,b,patternState,switchState,bright;
+var lampState = JSON.parse(fs.readFileSync("settings.json"));
+console.log(JSON.stringify(lampState))
 
+var NUM_LEDS = lampState.strip_length, 
+   pixelData = new Uint32Array(NUM_LEDS);
 ws281x.init(NUM_LEDS);
 
- let r = 0;
- let g = 0;
- let b = 0;
- let patternState = 0;
- let switchState = 0;
- let bright = 30;
- let firstConnection = 0;
+const lampName = lampState.name;
+ r = lampState.settings.r;
+ g = lampState.settings.g;
+ b = lampState.settings.b;
+ patternState = lampState.settings.pattern;
+ switchState = lampState.settings.power;
+ bright = lampState.settings.brightness;
 
 // ---- trap the SIGINT and reset before exit
 process.on('SIGINT', function () {
   ws281x.reset();
   process.nextTick(function () { process.exit(0); });
+  var json = JSON.stringify(lampState)
+  fs.writeFileSync('settings.json', json, 'utf8', ()=>{ console.log("Saved state")});
 });
+
+
+function loadState(){
+  r = lampState.settings.r;
+  g = lampState.settings.g;
+  b = lampState.settings.b;
+  patternState = lampState.settings.pattern;
+  switchState = lampState.settings.power;
+  bright = lampState.settings.brightness;
+  if(switchState == 1){
+    for(var i = 0; i<NUM_LEDS;i++)
+      pixelData[i] = rgb2Int(r,g,b);
+  }
+  else{
+    for(var i = 0; i<NUM_LEDS;i++)
+    pixelData[i] = 0x000000;
+  }
+  ws281x.setBrightness(bright);
+  ws281x.render(pixelData);
+}
+loadState();
+
+function saveState(){
+  lampState.settings.r = r;
+  lampState.settings.g = g;
+  lampState.settings.b = b;
+  lampState.settings.pattern = patternState;
+  lampState.settings.power = switchState;
+  lampState.settings.brightness = bright;
+  var json = JSON.stringify(lampState)
+  fs.writeFile('settings.json', json, 'utf8', ()=>{ console.log("Saved state")});
+}
 
 var Descriptor = bleno.Descriptor;
 
@@ -76,18 +114,8 @@ class SwitchCharacteristic extends bleno.Characteristic {
           this.argument = data.readUInt8();
           var status = this.argument === 0 ? "Off" : "On";
           console.log(`${this.name} is now ${status}`);
-          if(status === "On"){
-            for(var i = 0; i<NUM_LEDS;i++)
-            pixelData[i] = rgb2Int(r,g,b);
-            ws281x.setBrightness(bright);
-		switchState=1;
-          }
-          else{
-            for(var i = 0; i<NUM_LEDS;i++)
-            pixelData[i] = 0x000000;
-		switchState=0;
-          }
-          ws281x.render(pixelData);
+          lampState.settings.power = this.argument;
+          loadState();
           callback(this.RESULT_SUCCESS);
       } catch (err) {
           console.error(err);
@@ -96,7 +124,7 @@ class SwitchCharacteristic extends bleno.Characteristic {
   }
   onReadRequest(offset, callback) {
     try {
-        let data = new Buffer(switchState);
+        let data = new Buffer(lampState.settings.power);
         callback(this.RESULT_SUCCESS, data);
     } catch (err) {
         console.error(err);
@@ -140,6 +168,7 @@ class ColorCharacteristic extends bleno.Characteristic {
         pixelData[i] = rgb2Int(r,g,b);
       }
       ws281x.render(pixelData);
+      saveState();
       callback(this.RESULT_SUCCESS);
       } catch (err) {
           console.error(err);
@@ -184,7 +213,7 @@ class BrightnessCharacteristic extends bleno.Characteristic {
           console.log(`${this.name} is now ${this.argument}`);
           ws281x.setBrightness(this.argument);
           ws281x.render(pixelData);
-
+          saveState();
           callback(this.RESULT_SUCCESS);
       } catch (err) {
           console.error(err);
@@ -228,13 +257,12 @@ class PatternCharacteristic extends bleno.Characteristic {
       patternState = this.argument
       console.log(`${this.name} is ${this.argument}`);
       clearIntervals();
-      
       switch(patternState){
         case 1:{
           rainbow();
         }
       }
-
+      saveState();
       callback(this.RESULT_SUCCESS);
       } catch (err) {
           console.error(err);
@@ -272,7 +300,7 @@ var neopixelService =  new bleno.PrimaryService({
 
 bleno.on('stateChange', function(state) {
   if (state === 'poweredOn') {
-    bleno.startAdvertising('Origami Lamp Noden', ["ccc0"]);
+    bleno.startAdvertising(lampName, ["ccc0"]);
     console.log("Bluetooth On");
   } else {
     bleno.stopAdvertising();
@@ -282,19 +310,13 @@ bleno.on('stateChange', function(state) {
 // Notify the console that we've accepted a connection
 bleno.on('accept', function(clientAddress) {
   console.log("Accepted connection from address: " + clientAddress);
-  if(switchState == 1){
-    for(var i = 0; i<NUM_LEDS;i++){
-      pixelData[i] = rgb2Int(r,g,b);
-    }
-    ws281x.setBrightness(bright);
-    ws281x.render(pixelData);
-  }
+  loadState();
 });
 
 // Notify the console that we have disconnected from a client
 bleno.on('disconnect', function(clientAddress) {
   console.log("Disconnected from address: " + clientAddress);
-
+  saveState();
 });
 
 bleno.on('advertisingStart', function(error) {
