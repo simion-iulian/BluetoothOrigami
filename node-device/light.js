@@ -23,7 +23,7 @@ process.on('SIGINT', function () {
   ws281x.reset();
   process.nextTick(function () { process.exit(0); });
   var json = JSON.stringify(lampState)
-  fs.writeFileSync('settings.json', json, 'utf8', ()=>{ console.log("Saved state")});
+  fs.writeFileSync('settings.json', json, 'utf8', () => { console.log("Saved state")});
 });
 
 
@@ -350,7 +350,10 @@ function rainbow(){
       pixelData[i] = colorwheel((offset + i) % 256);
     }
   offset = (offset + 1) % 256;
-  ws281x.render(pixelData)
+  if(switchState == 1)
+    ws281x.render(pixelData)
+  else 
+    loadState()
   }, 1000/30);
 }
 
