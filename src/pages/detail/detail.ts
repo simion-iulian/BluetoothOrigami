@@ -73,28 +73,6 @@ export class DetailPage {
         });
       }
     );
-
-    // TODO read and notification should use the same handler
-    // this.ble.startNotification(peripheral.id, NEOPIXEL_SERVICE, POWER_SWITCH).subscribe(
-    //   buffer => {
-    //     var data = new Uint8Array(buffer);
-    //     console.log('Received Notification: Power Switch = ' + data);
-    //     this.ngZone.run(() => {
-    //       this.power = data[0] !== 0;
-    //     });
-    //   }
-    // );
-
-    // this.ble.startNotification(peripheral.id, NEOPIXEL_SERVICE, BRIGHTNESS).subscribe(
-    //   buffer => {        
-    //     var data = new Uint8Array(buffer);
-    //     console.log('Received Notification: Brightness = ' + data[0]);
-    //     this.ngZone.run(() => {
-    //       this.brightness = data[0];
-    //     });
-    //   }
-    // );
-    
   }
 
   onDeviceDisconnected(peripheral) {
@@ -178,7 +156,5 @@ export class DetailPage {
       },
       () => console.log('Error updating  power switch')
     );
-
   }
-
 }
