@@ -22,8 +22,8 @@ const lampName = lampState.name;
 process.on('SIGINT', function () {
   ws281x.reset();
   process.nextTick(function () { process.exit(0); });
-  var json = JSON.stringify(lampState)
-  fs.writeFileSync('settings.json', json, 'utf8', () => { console.log("Saved state")});
+  //var json = JSON.stringify(lampState)
+  //fs.writeFileSync('settings.json', json, 'utf8', () => { console.log("Saved state")});
 });
 
 
