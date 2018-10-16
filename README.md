@@ -12,10 +12,8 @@ Credit due to these repos:
 
 ## Ionic 3
 
-This project requires Ionic3
+This project requires Ionic3 and cordova
     `npm install -g ionic@latest`
-
-Install Cordova just to be safe
     `npm install -g cordova@latest`
 
 
@@ -24,15 +22,22 @@ Install Cordova just to be safe
 Assuming you have Xcode installed
     `ionic cordova run ios --device`
 
-
 ## Android
 
 Assuming you have the Android SDK installed
     `ionic cordova run android --device`
 
 ## Raspberry Pi Zero W setup:
-    npm install bleno
+In order to have the script at startup move the `lampService` from `node-device folder` to `/etc/init.d/lampService` and run these:
+    sudo npm install -g forever forver-monitor
+    sudo chmod 755 /etc/init.d/lampService
+    sudo update-rc.d lampService defaults
+
+Run `sh /etc/init.d/lampService start` in order to check if the service is running then restart the service.
+
+Inside the folder containing the node-device script (light.js) run these
     npm install node-gyp
+    npm install bleno
     npm install rpi-ws281x-native
 
 
