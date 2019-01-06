@@ -1,9 +1,10 @@
 var bleno = require('bleno');
 var ws281x = require('rpi-ws281x-native');
-var fs = require("fs");
+
+
+let lampState = {"name":"Lukas Origami Lamp","strip_length":240,"settings":{"r":181,"g":102,"b":56,"pattern":1,"power":0,"brightness":226}}
 
 let r,g,b,patternState,switchState,bright;
-var lampState = JSON.parse(fs.readFileSync("settings.json"));
 console.log(JSON.stringify(lampState))
 
 var NUM_LEDS = lampState.strip_length, 
@@ -22,8 +23,6 @@ const lampName = lampState.name;
 process.on('SIGINT', function () {
   ws281x.reset();
   process.nextTick(function () { process.exit(0); });
-  //var json = JSON.stringify(lampState)
-  //fs.writeFileSync('settings.json', json, 'utf8', () => { console.log("Saved state")});
 });
 
 
@@ -54,14 +53,6 @@ function saveState(){
   lampState.settings.pattern = patternState;
   lampState.settings.power = switchState;
   lampState.settings.brightness = bright;
-  var json = JSON.stringify(lampState)
-  fs.writeFile('settings.json', json, 'utf8', ()=>{ console.log("Saved state")});
-}
-
-var Descriptor = bleno.Descriptor;
-
-function ab2str(buf) {
-  return String.fromCharCode.apply(null, new Uint16Array(buf));
 }
 
 var serviceSettings = {
@@ -88,7 +79,6 @@ var patternSettings = {
   characteristic_id:'2901'
 };
 
-
 class SwitchCharacteristic extends bleno.Characteristic {
   constructor(uuid, name) {
       super({
@@ -105,6 +95,7 @@ class SwitchCharacteristic extends bleno.Characteristic {
       this.argument = 0;
       this.name = name;
   }
+
   onWriteRequest(data, offset, withoutResponse, callback) {
       try {
           if(data.length != 1) {
@@ -286,8 +277,6 @@ let brightnessCharacteristic = new BrightnessCharacteristic(brightnessSettings.s
 let colorCharacteristic = new ColorCharacteristic(colorSettings.service_id,  "Color (24-bit)");
 let patternCharacteristic = new PatternCharacteristic(patternSettings.service_id,  "Pattern:");
 
-
-
 var neopixelService =  new bleno.PrimaryService({
   uuid: serviceSettings.service_id,
   characteristics: [
@@ -335,9 +324,8 @@ bleno.on('advertisingStart', function(error) {
 
 bleno.on("servicesSet", err => {
   console.log("Bleno: servicesSet")
-
-  // console.log(neopixelService)
 });
+
 bleno.on("servicesSetError", err => console.log("Bleno: servicesSetError"));
 
 //Animations
