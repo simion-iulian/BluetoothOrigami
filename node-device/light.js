@@ -2,7 +2,18 @@ var bleno = require('bleno');
 var ws281x = require('rpi-ws281x-native');
 
 
-let lampState = {"name":"Lukas Origami Lamp","strip_length":240,"settings":{"r":181,"g":102,"b":56,"pattern":1,"power":0,"brightness":226}}
+let lampState = {
+  name:"Lukas Origami Lamp",
+  strip_length:240,
+  settings:{
+    r:181,
+    g:102,
+    b:56,
+    pattern:1,
+    power:0,
+    brightness:226
+  }
+}
 
 let r,g,b,patternState,switchState,bright;
 console.log(JSON.stringify(lampState))
