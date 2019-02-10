@@ -29,6 +29,7 @@ Assuming you have the Android SDK installed
 
 ## Raspberry Pi Zero W setup:
 In order to have the script at startup move the `lampService` from `node-device folder` to `/etc/init.d/lampService` and run these:
+
     sudo npm install -g forever forver-monitor
     sudo chmod 755 /etc/init.d/lampService
     sudo update-rc.d lampService defaults
@@ -36,6 +37,7 @@ In order to have the script at startup move the `lampService` from `node-device 
 Run `sh /etc/init.d/lampService start` in order to check if the service is running then restart the service.
 
 Inside the folder containing the node-device script (light.js) run these
+
     npm install node-gyp
     npm install bleno
     npm install rpi-ws281x-native
